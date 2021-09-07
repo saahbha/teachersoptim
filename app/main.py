@@ -3,7 +3,6 @@ import pandas as pd
 from ortools.linear_solver import pywraplp
 from pulp import *
 import csv
-from prettytable import PrettyTable
 
 
 app = Flask(__name__)  
