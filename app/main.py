@@ -297,8 +297,7 @@ def success():
         # open csv file
         a = open("Output_Stats.csv", 'r')
         a = a.readlines()
-        b = open("Output_Unassigned_Students.csv", 'r').readlines()
-        return render_template("sucess.html", name = a, value =b)  
+        return render_template("sucess.html", name = a)  
 
 
 @app.route('/getPlotCSV') # this is a job for GET, not POST
