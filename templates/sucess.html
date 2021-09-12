@@ -1,20 +1,224 @@
-<html>  
-<head>  
-<title>success</title>  
-</head>  
-<body>  
-<p>Program ran successfully.</p>  
-    <p>Statistics: {{name}}
-    <br>
-    <br>
-    <br>
-    <a href="/getPlotCSV">Download Assigned Students</a>
-    <br> 
-    <br>
-    <a href="/getPlotCSV1">Download Assigned Courses</a>
-    <h3>Assigned students Preview: </h3>
-    <br>
-    <p>{{val}}</p>
-</p>  
-</body>  
-</html>  
+<!doctype html>
+<html>
+<head>
+	<title>TS Course Assignment Tool Output</title>
+</head>
+
+<style>
+    .collapsible {
+    background-color: #044b3b;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+    background-color: #555;
+    }
+
+    .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+    }
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #044b3b;
+        color: #ffffff;
+        text-align: center;
+    }
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        text-align: center;
+    }
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+</style>
+
+
+<body style="background-color:#f0ecec;">
+<h1 style="text-align: center;"><img alt="" src="https://teachers-scholars.org/wp-content/uploads/2021/03/logo3.png" style="height: 109px; width: 735px;" /></h1>
+
+<hr />
+<p>&nbsp;</p>
+
+<div style="background:#044b3b;border:1px solid #ccc;padding:5px 10px;">
+<p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><span style="color:#FFFFFF;"><big><strong><span style="font-size:36px;">Student Course Assignment Output</span></strong></big></span></span></p>
+
+<div style="background:white;border:1px solid #ccc;padding:5px 10px;">
+
+      <!-- PUT STUFF HERE-->
+      <p>
+        <input type="image" src="https://i.ibb.co/YZPM6bQ/back.png" id="myButton" style='height: 39px; width: 180px;'/>
+        <a href="/getPlotCSV"><img id='downloadStudents' type="image" src="https://i.ibb.co/Scv4Z8b/dastudent.png" id="myButton" style='height: 39px; width: 210px; margin-left: 20px;'/></a>
+            <a href="/getPlotCSV1"><img id='downloadCourses' type="image" src="https://i.ibb.co/qpkvfC2/dacourses.png" id="myButton" style='height: 39px; width: 210px; margin-left: 20px;'/></a>
+        <h2>Assignment Statistics</h2>
+        <div style='margin-left: 120px;'>
+            <table class="styled-table" style='display: inline'>
+                <thead>
+                    <tr>
+                        <th>Assignment</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                {% for key, value in jv.items() %}
+                <tr>
+                        <th> {{ key }} </th>
+                        <td> {{ value }} </td>
+                </tr>
+                {% endfor %}
+            </p>
+            </table> <p style='display: inline; font-family:trebuchet ms,helvetica,sans-serif; vertical-align: middle; margin-left: 50px;'> The assignment statistics are a quick view of how many students got there preference choice.</p>
+        </div>
+            <br>
+            <br>
+            <br>
+            <h1 style='text-align: center;'>Assignment Previews</h1>
+            <br>
+    
+            <button class="collapsible"><h2 style='text-align: center;'>Student Assignments</h2></button>
+            <div class="content" style='margin-left: auto; margin-right: auto;'>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            {% for n in names %}
+                            <th>{{ n }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    {% for key, value in val.items() %}
+                        <tr>
+                                <th> {{ key }} </th>
+                                {% for v in value %}
+                                    <td> {{ v }} </td>
+                                {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>        
+            
+            <button class="collapsible"><h2 style='text-align: center;'>Course Assignments</h2></button>
+            <div class="content">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        {% for n in names2 %}
+                        <th>{{ n }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                {% for key, value in val2.items() %}
+                    <tr>
+                            <th> {{ key }} </th>
+                            {% for v in value %}
+                                <td> {{ v }} </td>
+                            {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    
+        </p>
+        <!-- PUT STUFF ABOVE-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div data-cols="1" data-has-widgets="true" id="footer-widgets" style="box-sizing: border-box; margin: 0px; padding: 0px; border-top: 0px; border-right: 0px; border-bottom: none; border-left: 0px; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-stretch: inherit; font-size: 20px; line-height: inherit; font-family: Lato; vertical-align: baseline; color: rgb(255, 255, 255);">
+<div class="container" style="box-sizing: border-box; margin: 0px auto; padding: 0px 90px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline; position: relative; max-width: 1425px; width: 1061px;">
+<div class="row" style="box-sizing: border-box; margin: 0px; padding: 70px 0px 40px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline; position: relative;">
+<div class="col span_12" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline; position: relative; width: 881px; float: left; z-index: 10; min-height: 1px; text-align: center;">
+<div class="widget widget_text" id="text-2" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline;">
+<div class="textwidget" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline;">
+
+    <p style="box-sizing: border-box; margin: 0px; padding: 0px 0px 20px; border-width: 0px; border-style: initial; border-color: initial; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 1rem; line-height: 1.3rem; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased;"><span style="font-size:20px;"><span style="font-family:tahoma,geneva,sans-serif;"><br><br><br>Teachers as Scholars<br style="box-sizing: border-box;" />
+19 Agassiz St, Apt 21<br style="box-sizing: border-box;" />
+Cambridge, MA 02140</span></span></p>
+
+<p style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 1rem; line-height: 1.3rem; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased;"><span style="font-size:20px;"><span style="font-family:tahoma,geneva,sans-serif;"><a href="https://teachers-scholars.org/contact" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: 700; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; text-decoration-line: none; transition: color 0.3s ease 0s; color: rgb(255, 255, 255) !important;">Send us a message.</a></span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row" data-layout="default" id="copyright" style="box-sizing: border-box; margin: 0px; padding: 45px 0px 70px; border-style: solid none none; border-top-color: rgba(255, 255, 255, 0.18); border-right-width: initial; border-right-color: initial; border-bottom-width: initial; border-bottom-color: initial; border-left-width: initial; border-left-color: initial; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-stretch: inherit; font-size: 12px; line-height: inherit; font-family: Lato; vertical-align: baseline; position: relative; background-color: rgb(0, 77, 61); color: rgb(119, 119, 119);">
+<div class="container" style="box-sizing: border-box; margin: 0px auto; padding: 0px 90px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline; position: relative; max-width: 1425px; width: 1061px;">
+<div class="col span_7 col_last" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline; position: relative; width: 881px; float: none; z-index: 10; min-height: 1px; text-align: center;">
+<ul class="social" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font: inherit; vertical-align: baseline; list-style: none; float: none; width: 881px;">
+</ul>
+</div>
+
+<div class="col span_5" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline; position: relative; width: 881px; float: none; z-index: 10; min-height: 1px; text-align: center;">
+<div class="widget" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline;">&nbsp;</div>
+
+<div class="widget" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline;">&nbsp;</div>
+
+<div class="widget" style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font: inherit; vertical-align: baseline;">&nbsp;</div>
+
+<p style="box-sizing: border-box; margin: 3px 0px 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 1rem; line-height: 22px; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased; color: rgb(255, 255, 255);"><span style="font-size:20px;"><span style="font-family:tahoma,geneva,sans-serif;">&copy; 2021 Teachers as Scholars. All Rights Reserved</span></span></p>
+
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+
+    
+
+    document.getElementById("myButton").onclick = function () {
+        location.replace("/")
+    };
+
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+      });
+    }
+    </script> 
+
+
+</body>
+</html>

@@ -1,8 +1,21 @@
 <!doctype html>
 <html>
 <head>
-	<title>HTML Editor - Full Version</title>
+	<title>TS Course Assignment Tool</title>
 </head>
+<style>
+    .label {
+        background-color: indigo;
+        color: white;
+        padding: 0.5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+</style>
+
+
 <body style="background-color:#f0ecec;">
 <h1 style="text-align: center;"><img alt="" src="https://teachers-scholars.org/wp-content/uploads/2021/03/logo3.png" style="height: 109px; width: 735px;" /></h1>
 
@@ -14,7 +27,9 @@
 
 <div style="background:white;border:1px solid #ccc;padding:5px 10px;">
 
-
+    <!--default html file upload button-->
+    
+ 
     <p style="margin-left: 120px;"><span style="font-family:trebuchet ms,helvetica,sans-serif;"><span style="font-size:22px;"><span style="font-family:tahoma,geneva,sans-serif;">Please upload your student and course files to the &quot;Import Student Choices&quot; and &quot;Import Course List&quot; buttons&nbsp;and c</span>lick &quot;Assign Students&quot; to run the program.&nbsp;Expect&nbsp;</span></span><span style="font-family:trebuchet ms,helvetica,sans-serif;"><span style="font-size:22px;">it to take 5-7 seconds for the the program to run.</span></span></p>
 
     <p style="margin-left: 120px;">&nbsp;</p>
@@ -23,8 +38,15 @@
 
     <form action = "/success" method = "post" enctype="multipart/form-data">   
 
-            <p style="margin-left: 160px;"><img alt="" id="studentbutton" src="https://i.ibb.co/VCSYCxP/button2.png" style="height: 39px; width: 200px;" type="image" /> <br> &nbsp;<input name="file1" alt="" id="studentbutton" src="https://i.ibb.co/VCSYCxP/button2.png" style="height: 39px; width: 200px; margin-left: 40px;" type="file" />&nbsp;</p>
-
+            <p style="margin-left: 160px;">
+                <!---- Student import button-->
+                <input name='file1' type="file" id="actual-btn" hidden/> 
+                <label for='actual-btn' style='cursor: pointer;'>
+                <img alt="" id="studentbuttonImage" src="https://i.ibb.co/VCSYCxP/button2.png" style="height: 39px; width: 200px; vertical-align: middle;" type="image" /></label>
+                <br><span id="file-chosen" style='text-align: center; margin-left: 50px; display: inline; text-align: center;'>No file chosen</span>
+                &nbsp;
+                </p>
+                <!---- Student import button -->
             <div class="wpb_text_column wpb_content_element " style="box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-stretch: inherit; line-height: inherit; font-family: Lato; vertical-align: baseline; background-color: rgb(255, 255, 255);">
             <div class="wpb_wrapper" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; vertical-align: baseline;">
             <p style="font-size: 1rem; box-sizing: border-box; margin: 0px; padding: 0px; border-width: 0px; border-style: initial; border-color: initial; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: 1.3rem; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size:22px;"><span style="font-family:trebuchet ms,helvetica,sans-serif;">This button imports an Excel, or .csv, file that contains the names and numbers of the courses.</span></span></p>
@@ -32,7 +54,17 @@
             <div style="font-size: inherit;">&nbsp;</div>
 
             <div style="">
-            <p style="font-size: inherit; margin-left: 160px;"><img alt="" id="coursebutton" src="https://i.ibb.co/LnmLXfB/coursebutton.png" style="width: 160px; height: 39px;" type="image" /> <br>  <input name="file2" alt="" id="coursebutton" src="https://i.ibb.co/LnmLXfB/coursebutton.png" style="width: 160px; height: 39px; margin-left: 40px;" type="file" /></p>
+            <p style="font-size: inherit; margin-left: 160px;">
+                
+                        <!---- Course import button-->
+                        <input name='file2' type="file" id="actual-btn1" hidden/> 
+                        <label for='actual-btn1' style='cursor: pointer;'>
+                        <img alt="" id="studentbuttonImage" src="https://i.ibb.co/LnmLXfB/coursebutton.png" style="height: 39px; width: 180px; vertical-align: middle;" type="image" /></label>
+                        <br><span id="file-chosen1" style='text-align: center; margin-left: 50px; display: inline; text-align: center;'>No file chosen</span>
+                        &nbsp;
+                        </p>
+                        <!---- course import button -->
+
 
             <p style="font-size: inherit; margin-left: 160px;"><span style="font-family:trebuchet ms,helvetica,sans-serif;"><span style="font-size: 22px; background-color: rgb(255, 255, 255);">This button imports an Excel, or .csv, file that contains the student information: student ID, first name, last name, first choice, second choice, third choice.</span></span></p>
 
@@ -42,10 +74,17 @@
 
             <p style="font-size: inherit; margin-left: 160px;"><input alt="" id="assignbutton" src="https://i.ibb.co/myf1gRc/assign-students.png" style="width: 150px; height: 40px;" type="submit" value="Assign Students"/></p>
         </form>
+
+        
+
+
 <div class="wpb_text_column wpb_content_element " style="font-size: 20px; box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-stretch: inherit; line-height: inherit; font-family: Lato; vertical-align: baseline; background-color: rgb(255, 255, 255);">
 <div class="wpb_wrapper" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font: inherit; vertical-align: baseline;">
 <p style="box-sizing: border-box; margin: 0px 0px 0px 160px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 1rem; line-height: 1.3rem; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased;"><span style="font-family:trebuchet ms,helvetica,sans-serif;"><span style="font-size:22px;">This button runs the algorithm, and creates the 2 tables below.</span></span></p>
-
+<h2 style='margin-left: 120px;'>Student Assignment Output</h2>
+<img type='image' id='studnetPreviewTable' src='https://i.gyazo.com/07073c6bd16874cfbfa491ec69119183.png' type='image' style='margin-left: 120px'>
+<h2 style='margin-left: 120px;'>Course Assignment Output</h2>
+<img type='image' id='coursePreviewTable' src='https://i.gyazo.com/88e70ab6a876ca69fabfc7adfbd2646c.png' type='image' style='margin-left: 120px;'>
 <p style="box-sizing: border-box; margin: 0px 0px 0px 160px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 1rem; line-height: 1.3rem; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased;">&nbsp;</p>
 
 <p style="box-sizing: border-box; margin: 0px 0px 0px 160px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 1rem; line-height: 1.3rem; font-family: inherit; vertical-align: baseline; -webkit-font-smoothing: antialiased;">&nbsp;</p>
@@ -97,6 +136,25 @@ Cambridge, MA 02140</span></span></p>
 </div>
 </div>
 </div>
+
+
+<script>
+        const actualBtn = document.getElementById('actual-btn');
+
+        const fileChosen = document.getElementById('file-chosen');
+            actualBtn.addEventListener('change', function(){
+            fileChosen.textContent = this.files[0].name
+        })
+
+        const actualBtn1 = document.getElementById('actual-btn1');
+
+        const fileChosen1 = document.getElementById('file-chosen1');
+            actualBtn1.addEventListener('change', function(){
+            fileChosen1.textContent = this.files[0].name
+        })
+</script>
+
+
 </body>
 </html>
 

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, send_file
+import json
 import pandas as pd
 from ortools.linear_solver import pywraplp
 from pulp import *
@@ -297,9 +298,24 @@ def success():
         # open csv file
         a = open("Output_Stats.csv", 'r')
         a = a.readlines()
-        b = open("Output_Assigned_Students.csv", "r")
-        b = b.readlines()
-        return render_template("sucess.html", name = a, val=b)  
+        output_stats = [val.replace('\n', '') for val in a]
+        result = {}
+        for line in output_stats:
+            x = line.split(':')
+            result[x[0]] = x[1]
+        preview = {}
+        df = pd.read_csv('Output_Assigned_Students.csv')
+        df_list = df.values.tolist()
+        print(df_list)
+        for index, row in df.iterrows():
+            preview[index] = df_list[index]
+
+        preview2 = {}
+        df2 = pd.read_csv('Output_Courses.csv')
+        df_list2 = df2.values.tolist()
+        for i, row in df2.iterrows():
+            preview2[i] = df_list2[i]
+        return render_template("sucess.html", name=a, val=preview, jv=result, names=df.columns, names2=df2.columns, val2=preview2)  
 
 
 @app.route('/getPlotCSV') # this is a job for GET, not POST
