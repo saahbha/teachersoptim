@@ -13,7 +13,7 @@ def upload():
 @app.route('/success', methods = ['POST'])  
 def success():  
     if request.method == 'POST':
-
+        # Solve from input
         students_FileLocation = request.files['file1']
         courses_FileLocation = request.files['file2']
         with open('config.json') as config_file:
@@ -61,6 +61,13 @@ def success():
         return render_template("sucess.html", name=a, val=preview, jv=result, names=df.columns, names2=df2.columns, val2=preview2, names3=df3.columns, val3=preview3)
 
 
+@app.route('/getStudentTemplate') # this is a job for GET, not POST
+def plot_csv():
+
+    return send_file('Output_Assigned_Students.csv',
+                     mimetype='text/csv',
+                     attachment_filename='Output_Assigned_Students.csv',
+                     as_attachment=True)
 
 @app.route('/getPlotCSV') # this is a job for GET, not POST
 def plot_csv():
@@ -74,6 +81,13 @@ def plot_csv1():
     return send_file('Output_Courses.csv',
                      mimetype='text/csv',
                      attachment_filename='Output_Courses.csv',
+                     as_attachment=True)
+
+@app.route('/getPlotCSV2') # this is a job for GET, not POST
+def plot_csv2():
+    return send_file('Output_Unassigned_Students.csv',
+                     mimetype='text/csv',
+                     attachment_filename='Output_Unassigned_Students.csv',
                      as_attachment=True)
 
 if __name__ == '__main__':  

@@ -184,6 +184,9 @@ class Matcher:
         courseFirstChoices = [0 for c in range(self.C)]
         courseSecondChoices = [0 for c in range(self.C)]
         courseThirdChoices = [0 for c in range(self.C)]
+        courseAssignedFirstChoices = [0 for c in range(self.C)]
+        courseAssignedSecondChoices = [0 for c in range(self.C)]
+        courseAssignedThirdChoices = [0 for c in range(self.C)]
         for s in range(self.S):
             firstChoice = self.studentFirstChoices[s]
             secondChoice = self.studentSecondChoices[s]
@@ -192,15 +195,23 @@ class Matcher:
             for c in range(self.C):        
                 #Courses Stats
                 courseId = c+1
-                if (courseId == firstChoice): 
+                #total choice and assigned choice
+                if (courseId == firstChoice):
                     courseFirstChoices[c] += 1
+                    if (self.studentAssignments[s][c] == 1):
+                        courseAssignedFirstChoices[c] += 1
                 elif (courseId == secondChoice):
                     courseSecondChoices[c] += 1
+                    if (self.studentAssignments[s][c] == 1):
+                        courseAssignedSecondChoices[c] += 1
                 elif (courseId == thirdChoice):
-                    courseThirdChoices[c] += 1  
+                    courseThirdChoices[c] += 1
+                    if (self.studentAssignments[s][c] == 1):
+                        courseAssignedThirdChoices[c] += 1
                 if (self.studentAssignments[s][c] == 1): 
                     courseSizes[c] += 1
-                    
+
+
                 #Students Stats
                 if (self.studentAssignments[s][c] == 1): 
                     if (courseId == firstChoice): 
@@ -245,13 +256,17 @@ class Matcher:
             columnNames = []
             columnNames.append('Course number')
             columnNames.append('Course name')
-            columnNames.append('First choice')
-            columnNames.append('Second choice')
-            columnNames.append('Third choice')
+            columnNames.append('Total First choices')
+            columnNames.append('Total Second choices')
+            columnNames.append('Total Third choices')
             columnNames.append('Weight')
             columnNames.append('Minimum class size')
             columnNames.append('Maximum class size')
             columnNames.append('Students assigned')
+            columnNames.append('Assigned First choices')
+            columnNames.append('Assigned Second choices')
+            columnNames.append('Assigned Third choices')
+            columnNames.append('Assigned Weight')
             course_writter.writerow(columnNames)
             
             #write row data
@@ -260,16 +275,23 @@ class Matcher:
                 c1 = courseFirstChoices[c]
                 c2 = courseSecondChoices[c]
                 c3 = courseThirdChoices[c]
-                
+                ca1 = courseAssignedFirstChoices[c]
+                ca2 = courseAssignedSecondChoices[c]
+                ca3 = courseAssignedThirdChoices[c]
+
                 rowData.append(c+1) #'Course number'
                 rowData.append(self.courseNames[c]) #'Course name'
-                rowData.append(c1) #'First choice'
-                rowData.append(c2) #'Second choice'
-                rowData.append(c3) #'Third choice'
-                rowData.append(5*c1+3*c2+c3) #'Weight'
+                rowData.append(c1) #'Total First choices'
+                rowData.append(c2) #'Total Second choices'
+                rowData.append(c3) #'Total Third choices'
+                rowData.append(5 * c1 + 3 * c2 + c3) #'Weight'
                 rowData.append(self.courseMins[c]) #'Minimum class size'
                 rowData.append(self.courseMaxs[c]) #'Maximum class size'
                 rowData.append(courseSizes[c]) #'Students assigned'
+                rowData.append(ca1) # 'Assigned First choices'
+                rowData.append(ca2) # 'Assigned Second choices'
+                rowData.append(ca3) # 'Assigned Third choices'
+                rowData.append(5 * ca1 + 3 * ca2 + ca3)  # 'Assigned Weight'
                 course_writter.writerow(rowData)
         
         with open('Output_Assigned_Students.csv', mode='w', encoding='utf-8') as course_file:
@@ -279,6 +301,9 @@ class Matcher:
             columnNames.append('Student ID')
             columnNames.append('First Name')
             columnNames.append('Last Name')
+            columnNames.append('First choice')
+            columnNames.append('Second choice')
+            columnNames.append('Third choice')
             columnNames.append('Course Assignment')
             student_writer.writerow(columnNames)
             
@@ -293,6 +318,9 @@ class Matcher:
                     rowData.append(s + 1)  # 'Student ID'
                     rowData.append(self.studentFirstName[s])  # 'First Name'
                     rowData.append(self.studentLastName[s])  # 'Last Name'
+                    rowData.append(self.studentFirstChoices[s])# 'First choice'
+                    rowData.append(self.studentSecondChoices[s])# 'Second choice'
+                    rowData.append(self.studentThirdChoices[s])# 'Third choice'
                     rowData.append(ca)  # 'Course Assignment'
                     student_writer.writerow(rowData)
 
@@ -304,6 +332,9 @@ class Matcher:
             columnNames.append('Student ID')
             columnNames.append('First Name')
             columnNames.append('Last Name')
+            columnNames.append('First choice')
+            columnNames.append('Second choice')
+            columnNames.append('Third choice')
             student_writer.writerow(columnNames)
             
             #write row data
@@ -311,8 +342,11 @@ class Matcher:
                 if (self.studentIdAssignments[s][0] == -1):            
                     rowData = []
                     rowData.append(s+1)#'Student ID'
-                    rowData.append(self.studentFirstName[s])#'First Name'
-                    rowData.append(self.studentLastName[s])#'Last Name'
+                    rowData.append(self.studentFirstName[s]) #'First Name'
+                    rowData.append(self.studentLastName[s]) #'Last Name'
+                    rowData.append(self.studentFirstChoices[s])  # 'First choice'
+                    rowData.append(self.studentSecondChoices[s])  # 'Second choice'
+                    rowData.append(self.studentThirdChoices[s])  # 'Third choice'
                     student_writer.writerow(rowData)
                     
         with open('Output_Stats.csv', mode='w', encoding='utf-8') as course_file:
