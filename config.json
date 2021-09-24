@@ -1,0 +1,18 @@
+{
+   "students_FileLocation":"data\\MOCK_Students.xlsx",
+   "students_SheetName":0,
+   "students_Columns":{
+      "First_Name":"First Name",
+      "Last_Name":"Last Name",
+      "P1":"First choice",
+      "P2":"Second choice",
+      "P3":"Third choice"
+   },
+   "courses_FileLocation":"data\\MOCK_Courses.xlsx",
+   "courses_SheetName":0,
+   "courses_Columns":{
+      "Name":"Course name",
+      "Min":"Minimum class size",
+      "Max":"Maximum class size"
+   }
+}

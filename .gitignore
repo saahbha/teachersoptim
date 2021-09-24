@@ -1,1 +1,7 @@
 /env
+env/
+venv/
+Output_Assigned_Students.csv
+Output_Courses.csv
+Output_Stats.csv
+Output_Unassigned_Students.csv

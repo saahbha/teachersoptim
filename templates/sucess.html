@@ -92,7 +92,7 @@
                 </tr>
                 {% endfor %}
             </p>
-            </table> <p style='display: inline; font-family:trebuchet ms,helvetica,sans-serif; vertical-align: middle; margin-left: 50px;'> The assignment statistics are a quick view of how many students got there preference choice.</p>
+            </table> <p style='display: inline; font-family:trebuchet ms,helvetica,sans-serif; vertical-align: middle; margin-left: 50px;'> These assignment statistics are a quick view of how many students got their preference choices.</p>
         </div>
             <br>
             <br>
@@ -120,7 +120,29 @@
                         </tr>
                     {% endfor %}
                 </table>
-            </div>        
+            </div>
+
+            <button class="collapsible"><h2 style='text-align: center;'>Student Unassignments</h2></button>
+            <div class="content" style='margin-left: auto; margin-right: auto;'>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            {% for n in names3 %}
+                            <th>{{ n }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    {% for key, value in val3.items() %}
+                        <tr>
+                                <th> {{ key }} </th>
+                                {% for v in value %}
+                                    <td> {{ v }} </td>
+                                {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
             
             <button class="collapsible"><h2 style='text-align: center;'>Course Assignments</h2></button>
             <div class="content">
