@@ -256,6 +256,7 @@ class Matcher:
             columnNames = []
             columnNames.append('Course number')
             columnNames.append('Course name')
+            columnNames.append('Total Choices')# 'Total Choices'
             columnNames.append('Total First choices')
             columnNames.append('Total Second choices')
             columnNames.append('Total Third choices')
@@ -281,6 +282,7 @@ class Matcher:
 
                 rowData.append(c+1) #'Course number'
                 rowData.append(self.courseNames[c]) #'Course name'
+                rowData.append(c1+c2+c3)  #'Total Choices'
                 rowData.append(c1) #'Total First choices'
                 rowData.append(c2) #'Total Second choices'
                 rowData.append(c3) #'Total Third choices'
