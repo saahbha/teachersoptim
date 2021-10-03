@@ -178,11 +178,12 @@ class Matcher:
         self.makeObjective()
         self.makeConstraints()
 
-    def solve(self, solver="PULP_CBC_CMD"):
+    def solve(self, solver="PULP_CBC_CMD", timeLimit=15):
         self.initProblem()
         # self.model.writeLP("TAS.lp")
-        self.model.solve(getSolver(solver))
-        print("Status:", LpStatus[self.model.status])
+        self.model.solve(getSolver(solver, timeLimit=timeLimit))
+        self.status = LpStatus[self.model.status]
+        print("Status:", self.status)
         print("Objective value: ", value(self.model.objective))
 
     def outputResults(self):
@@ -251,6 +252,7 @@ class Matcher:
                 numNoAssignment += 1
 
         # Print some stats
+        solutionStat = ('Solution Status: %s' % self.status)
         prefobj = self.c1Value * numFirstChoiceAssignment + self.c2Value * numSecondChoiceAssignment + self.c3Value * numThirdChoiceAssignment
         totalWeightStat = ('Total Course Weight Achieved: %.5f (%d/%d)'
               % (float(prefobj) / (self.S*self.c1Value), prefobj, self.S*self.c1Value))
@@ -465,7 +467,8 @@ class Matcher:
             worksheet = workbook.get_worksheet_by_name("Stats")
 
             # write column names
-            rows = [totalWeightStat, firstChoiceStat, secondChoiceStat, thirdChoiceStat, noChoiceStat, multiChoiceStat, noAssignmentStat]
+
+            rows = [solutionStat, totalWeightStat, firstChoiceStat, secondChoiceStat, thirdChoiceStat, noChoiceStat, multiChoiceStat, noAssignmentStat]
             for row in rows:
                 stats_writer.writerow([row])
             worksheet.write_column('A1', rows)
