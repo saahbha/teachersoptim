@@ -79,9 +79,11 @@
             <!-- PUT STUFF HERE-->
             <p>
                <button type="button" id="myButton" class="actual-btn"> Back to Assign</button>
-               <a href="/getPlotCSV" class="actual-btn">Download Assigned Students</a>
-               <a href="/getPlotCSV1" class="actual-btn">Download Assigned Courses</a>
-               <a href="/getPlotCSV2" class="actual-btn">Download Unassigned Students</a>
+               <a href="/getAssignedStudents" class="actual-btn">Download Assigned Students</a>
+               <a href="/getCourses" class="actual-btn">Download Assigned Courses</a>
+               <a href="/getUnassignedStudents" class="actual-btn">Download Unassigned Students</a>
+               <a href="/getBulletVotingStudents" class="actual-btn">Download Students Without Unique Choices</a>
+               <a href="/getAssignmentFile" class="actual-btn">Download Comprehensive Assignment File</a>
             <h2>Assignment Statistics</h2>
             <div style='margin-left: 120px;'>
                <table class="styled-table" style='display: inline'>
@@ -91,9 +93,9 @@
                         <th>Score</th>
                      </tr>
                   </thead>
-                  {% for key, value in jv.items() %}
+                  {% for statName, value in statTable.items() %}
                   <tr>
-                     <th> {{ key }} </th>
+                     <th> {{ statName }} </th>
                      <td> {{ value }} </td>
                   </tr>
                   {% endfor %}
@@ -114,12 +116,12 @@
                   <thead>
                      <tr>
                         <th>Index</th>
-                        {% for n in names %}
+                        {% for n in assignedStudents_columns %}
                         <th>{{ n }}</th>
                         {% endfor %}
                      </tr>
                   </thead>
-                  {% for key, value in val.items() %}
+                  {% for key, value in assignedStudents_values.items() %}
                   <tr>
                      <th> {{ key }} </th>
                      {% for v in value %}
@@ -137,12 +139,35 @@
                   <thead>
                      <tr>
                         <th>Index</th>
-                        {% for n in names3 %}
+                        {% for n in unassignedStudents_columns %}
                         <th>{{ n }}</th>
                         {% endfor %}
                      </tr>
                   </thead>
-                  {% for key, value in val3.items() %}
+                  {% for key, value in unassignedStudents_values.items() %}
+                  <tr>
+                     <th> {{ key }} </th>
+                     {% for v in value %}
+                     <td> {{ v }} </td>
+                     {% endfor %}
+                  </tr>
+                  {% endfor %}
+               </table>
+            </div>
+                        <button class="collapsible">
+               <h2 style='text-align: center;'>Students Without Unique Choices</h2>
+            </button>
+            <div class="content" style='margin-left: auto; margin-right: auto;'>
+               <table class="styled-table">
+                  <thead>
+                     <tr>
+                        <th>Index</th>
+                        {% for n in nonuniqueStudents_columns %}
+                        <th>{{ n }}</th>
+                        {% endfor %}
+                     </tr>
+                  </thead>
+                  {% for key, value in nonuniqueStudents_values.items() %}
                   <tr>
                      <th> {{ key }} </th>
                      {% for v in value %}
@@ -160,12 +185,12 @@
                   <thead>
                      <tr>
                         <th>Index</th>
-                        {% for n in names2 %}
+                        {% for n in courses_columns %}
                         <th>{{ n }}</th>
                         {% endfor %}
                      </tr>
                   </thead>
-                  {% for key, value in val2.items() %}
+                  {% for key, value in courses_values.items() %}
                   <tr>
                      <th> {{ key }} </th>
                      {% for v in value %}

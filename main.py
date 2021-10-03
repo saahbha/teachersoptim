@@ -1,18 +1,19 @@
-from flask import Flask, render_template, request, send_file, send_from_directory
+from flask import Flask, render_template, request, send_file
 import xlsxwriter
 from matcher import HardConstraintMatcher
 from json import load
 import pandas as pd
-from csv import writer, QUOTE_MINIMAL
 
-app = Flask(__name__)  
- 
-@app.route('/')  
-def upload():  
-    return render_template("file_upload_form.html")  
- 
-@app.route('/success', methods = ['POST'])  
-def success():  
+app = Flask(__name__)
+
+
+@app.route('/')
+def upload():
+    return render_template("file_upload_form.html")
+
+
+@app.route('/success', methods=['POST'])
+def success():
     if request.method == 'POST':
         # Solve from input
         students_FileLocation = request.files['file1']
@@ -34,35 +35,49 @@ def success():
         a = open("Output_Stats.csv", 'r')
         a = a.readlines()
         output_stats = [val.replace('\n', '') for val in a]
-        result = {}
+        statTable = {}
         for line in output_stats:
             x = line.split(':')
-            result[x[0]] = x[1]
+            statTable[x[0]] = x[1]
 
-        preview = {}
-        df = pd.read_csv('Output_Assigned_Students.csv')
-        df_list = df.values.tolist()
-        print(df_list)
-        for index, row in df.iterrows():
-            preview[index] = df_list[index]
+        assignedStudents_values = {}
+        assignedStudents_DF = pd.read_csv('Output_Assigned_Students.csv')
+        assignedStudents_list = assignedStudents_DF.values.tolist()
+        print(assignedStudents_list)
+        for index, row in assignedStudents_DF.iterrows():
+            assignedStudents_values[index] = assignedStudents_list[index]
 
-        preview2 = {}
-        df2 = pd.read_csv('Output_Courses.csv')
-        df_list2 = df2.values.tolist()
-        for i, row in df2.iterrows():
-            preview2[i] = df_list2[i]
+        courses_values = {}
+        courses_DF = pd.read_csv('Output_Courses.csv')
+        courses_list = courses_DF.values.tolist()
+        print(courses_list)
+        for index, row in courses_DF.iterrows():
+            courses_values[index] = courses_list[index]
 
-        preview3 = {}
-        df3 = pd.read_csv('Output_Unassigned_Students.csv')
-        df_list3 = df3.values.tolist()
-        print(df_list3)
-        for index, row in df3.iterrows():
-            preview3[index] = df_list3[index]
+        unassignedStudents_values = {}
+        unassignedStudents_DF = pd.read_csv('Output_Unassigned_Students.csv')
+        unassignedStudents_list = unassignedStudents_DF.values.tolist()
+        print(unassignedStudents_list)
+        for index, row in unassignedStudents_DF.iterrows():
+            unassignedStudents_values[index] = unassignedStudents_list[index]
 
-        return render_template("sucess.html", name=a, val=preview, jv=result, names=df.columns, names2=df2.columns, val2=preview2, names3=df3.columns, val3=preview3)
+        nonuniqueStudents_values = {}
+        nonuniqueStudents_DF = pd.read_csv('Output_BulletVoting_Students.csv')
+        nonuniqueStudents_list = nonuniqueStudents_DF.values.tolist()
+        print(nonuniqueStudents_list)
+        for index, row in nonuniqueStudents_DF.iterrows():
+            nonuniqueStudents_values[index] = nonuniqueStudents_list[index]
+
+        return render_template("success.html",
+                               statTable=statTable,
+                               assignedStudents_columns=assignedStudents_DF.columns, assignedStudents_values=assignedStudents_values,
+                               courses_columns=courses_DF.columns, courses_values=courses_values,
+                               unassignedStudents_columns=unassignedStudents_DF.columns, unassignedStudents_values=unassignedStudents_values,
+                               nonuniqueStudents_columns = nonuniqueStudents_DF.columns, nonuniqueStudents_values = nonuniqueStudents_values,
+                               )
 
 
-@app.route('/getCourseTemplate') # this is a job for GET, not POST
+@app.route('/getCourseTemplate')  # this is a job for GET, not POST
 def plot_CourseTemplate():
     columns = {}
     with open('config.json') as config_file:
@@ -82,7 +97,8 @@ def plot_CourseTemplate():
 
     return send_file('courses_template.xlsx', as_attachment=True)
 
-@app.route('/getStudentTemplate') # this is a job for GET, not POST
+
+@app.route('/getStudentTemplate')  # this is a job for GET, not POST
 def plot_StudentTemplate():
     columns = {}
     with open('config.json') as config_file:
@@ -104,27 +120,40 @@ def plot_StudentTemplate():
 
     return send_file('students_template.xlsx', as_attachment=True)
 
-@app.route('/getPlotCSV') # this is a job for GET, not POST
-def plot_csv():
+@app.route('/getAssignmentFile')  # this is a job for GET, not POST
+def return_OutputAssignment():
+    return send_file('Output_Assignment.xlsx', as_attachment=True)
 
+@app.route('/getAssignedStudents')  # this is a job for GET, not POST
+def return_AssignedStudents():
     return send_file('Output_Assigned_Students.csv',
                      mimetype='text/csv',
                      attachment_filename='Output_Assigned_Students.csv',
                      as_attachment=True)
 
-@app.route('/getPlotCSV1') # this is a job for GET, not POST
-def plot_csv1():
+
+@app.route('/getCourses')  # this is a job for GET, not POST
+def return_Courses():
     return send_file('Output_Courses.csv',
                      mimetype='text/csv',
                      attachment_filename='Output_Courses.csv',
                      as_attachment=True)
 
-@app.route('/getPlotCSV2') # this is a job for GET, not POST
-def plot_csv2():
+
+@app.route('/getUnassignedStudents')  # this is a job for GET, not POST
+def return_UnassignedStudents():
     return send_file('Output_Unassigned_Students.csv',
                      mimetype='text/csv',
                      attachment_filename='Output_Unassigned_Students.csv',
                      as_attachment=True)
 
-if __name__ == '__main__':  
-    app.run(debug = True)  
+@app.route('/getBulletVotingStudents')  # this is a job for GET, not POST
+def return_BulletVotingStudents():
+    return send_file('Output_BulletVoting_Students.csv',
+                     mimetype='text/csv',
+                     attachment_filename='Output_BulletVoting_Students.csv',
+                     as_attachment=True)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,5 +1,5 @@
 {
-   "students_FileLocation":"data\\MOCK_Students.xlsx",
+   "students_FileLocation":"REAL_Students_5.0.xlsx",
    "students_SheetName":0,
    "students_Columns":{
       "First_Name":"First Name",
@@ -8,7 +8,7 @@
       "P2":"Second choice",
       "P3":"Third choice"
    },
-   "courses_FileLocation":"data\\MOCK_Courses.xlsx",
+   "courses_FileLocation":"REAL_Courses_5.0.xlsx",
    "courses_SheetName":0,
    "courses_Columns":{
       "Name":"Course name",
